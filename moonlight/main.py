@@ -89,17 +89,22 @@ while not finished:
             else:
                 print("That is not a valid action. Billy will be attacked if he doesn't decide quickly!")
 
-    if myPlayer.is_alive and has_fought:
-        print("Billy won the fight. He has %d hitpoints remaining." % myPlayer.health)
-         # Check if scene contains a chest, display message accordingly.
-        if myMap.scenes[ myMap.currentScene ].has_chest:
-            chest_count = chest_count + 1
-            print("Good job, this scene contained a chest!")
+    if myPlayer.is_alive:
+        if has_fought:
+            print("Billy won the fight. He has %d hitpoints remaining." % myPlayer.health)
+            # Check if scene contains a chest, display message accordingly.
+            if myMap.scenes[ myMap.currentScene ].has_chest:
+                chest_count = chest_count + 1
+                print("Good job, this scene contained a chest!")
+            else:
+                print("Harsh luck, no chest in this scene.")
+
+        # Player wins
+        elif len(visited) == len(myMap.scenes):
+            finished = True
+
         else:
-            print("Harsh luck, no chest in this scene.")
-    # Player went back to previous room.
-    elif myPlayer.is_alive and len(visited) == len(myMap.scenes):
-        finished = True
+            print("Billy went back successfully.")
     # Player is dead
     else:
         game_over = True
